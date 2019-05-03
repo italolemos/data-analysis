@@ -1,3 +1,4 @@
+#Vetores
 #1
 espadas <-c(1, 4, 5)
 rep(espadas, 10)
@@ -29,12 +30,13 @@ vetor01 <- sort(vetor01, na.last=NA)
 
 #5
 movie <- c("Whatever Works", "It Follows", 
-"Love and Mercy", "The Goonies", "Jiro Dreams of Sushi", "There Will be Blood", "Moon", 
-"Spice World", "Serenity", "Finding Vivian Maier")
+           "Love and Mercy", "The Goonies", "Jiro Dreams of Sushi", 
+           "There Will be Blood", "Moon", 
+           "Spice World", "Serenity", "Finding Vivian Maier")
 year <- c(2009, 2015, 2015, 1985, 2012, 2007, 2009, 1988, 2005, 2014)
 boxoffice <- c(3.0, 15.0, 15.0, 62.0, 3.0, 10.0, 321.0, 79.0, 39.0, 1.5)
-genre <- c("Comedy", "Horror", "Drama", "Adventure", "Documentary", "Drama", "Science Fiction",
-"Comedy", "Science Fiction", "Documentary")
+genre <- c("Comedy", "Horror", "Drama", "Adventure", "Documentary", 
+           "Drama", "Science Fiction", "Comedy", "Science Fiction", "Documentary")
 time <- c(92, 97, 120, 90, 81, 158, 94, -84, 119, 84)
 rating <- c("PG-13", "R", "R", "PG", "G", "R", "R", "PG-13", "PG-13", NA)
 
