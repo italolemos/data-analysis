@@ -276,7 +276,6 @@ verifica_numeros <- function(x){
 }
 verifica_numeros(numeros)
 #3
-
 word <- "abc"
 
 posicao <- function(word){
@@ -286,6 +285,21 @@ posicao <- function(word){
 }
 
 posicao(word)
-
 #4
+ST='NAME: Maria /COUNTRY:uruguay /EMAIL: mariaUY@gmail.com'
+
+break_string <- function(ST) {
+  words <- unlist(strsplit(ST, split = "/|:"))
+  lines <- c(words[1], words[3], words[5], words[2], words[4], words[6])
+  
+  return(matrix(lines, 3, 2))
+}
+
+break_string(ST)
+#5
+ST=c('NAME:Maria /COUNTRY:uruguay
+/EMAIL:mariaUY@gmail.com','NAME:Paul/COUNTRY:UK
+     /EMAIL:PaulUK@gmail.com',
+     'NAME:Jhon /COUNTRY:USA /EMAIL:JhonUSA@gmail.com','NAME:Carlos
+     /COUNTRY:Spain /EMAIL:CarlosSP@gmail.com')
 
