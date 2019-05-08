@@ -1,4 +1,6 @@
 #Familiaridade
+
+#2
 setwd("/Users/italolemos/Documents/Meu RCurso")
 
 # 3
@@ -11,10 +13,8 @@ atan(a)
 sin(tan(pi/2))
 #d
 factorial(23)
-
 #4
 demo(image()) # Exibe algums demonstracoes de scripts do R
-
 #5
 a.c<-1
 b.c<-2
@@ -24,14 +24,14 @@ d.c<-4
 rm(list = ls(pattern = ".c")) 
 #6
 ?q
-
 #7
 q()
 
 #Vetores
 #1
-espadas <-c(1, 4, 5)
-rep(espadas, 10)
+lote <-c("CI", "ES", "ES", "ES", "ES", "CT", "CT", "CT", "CT", "CT")
+espadas <- rep(lote, 10)
+espadas
 
 #2
 repetir <- rep(c(1:5), 10)
@@ -99,8 +99,12 @@ mean(which(rating == "R" | genre == "Comedy"))
 #1
 #a
 amostra = sample(LETTERS, 100, replace=TRUE)
+amostra
 #b
 letras <- factor(amostra, levels=LETTERS, ordered=TRUE)
+letras
+#c
+as.ordered(amostra)
 
 
 #Listas
@@ -116,18 +120,14 @@ C <-c(3.0, 5.0, 2.5, 1.0)
 dt <-data.frame("ID" = A, "Nome" = B, "Peso" = C, stringsAsFactors = FALSE)
 
 myList$frame = dt
-
 #c
 myList[-2]
-
 #d
 new_list <- list(1:5, 1:5, 1:5, 1:5, 1:5, 1:5, 1:5, 1:5, 1:5, 1:5, 1:5, 1:5, 1:5, 1:5, 1:5, 1:5, 1:5, 1:5, 1:5, 5:10)
 new_list
-
 #e
 list_size <- length(new_list)
 list_vectors_size <- lengths(new_list)
-
 #f
 lapply(new_list, summary)
 sapply(new_list, summary)
@@ -203,7 +203,22 @@ new_dataframe <- data.frame(new_data)
 #c
 most_new_data <- subset(new_dataframe, subset = REF == "C")
 most_new_dataframe <- data.frame(most_new_data)
+View(most_new_data)
+#d
+mutacao_para_t <- subset(most_new_data, subset = ALT=="T")
+nrow(mutacao_para_t)
 
+mutacao_para_g <- subset(most_new_data, subset = ALT=="G")
+nrow(mutacao_para_g)
+
+mutacao_para_a <- subset(most_new_data, subset = ALT=="A")
+nrow(mutacao_para_a)
+
+mutacoes <- factor(most_new_data$ALT, levels = c("G", "A", "T"))
+mutation.count <- table(mutacoes)
+View(mutation.count)
+
+# H?? preferencia para a mutancao de C para T
 
 #Estruturas de Controle e Repeticao
 #1
@@ -251,5 +266,7 @@ adicionar_dt(survey, "sex", sex)
 
 #2
 #3
+
+ahsajhsaj
 #4
 
