@@ -265,8 +265,27 @@ sex <- c("m", "m", "f", "f",
 adicionar_dt(survey, "sex", sex)
 
 #2
+numeros <- c(0, 2, 1, 4, 8)
+
+
+verifica_numeros <- function(x){
+  numbers <- c(0:9)
+  
+  return (setdiff(numbers, x))
+  
+}
+verifica_numeros(numeros)
 #3
 
-ahsajhsaj
+word <- "abc"
+
+posicao <- function(word){
+  brake_letters <- unlist(strsplit(word, ""))
+  
+  return (match(brake_letters, letters))
+}
+
+posicao(word)
+
 #4
 
