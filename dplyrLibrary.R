@@ -101,3 +101,38 @@ cafeina %>%
     mediana = median(score),
     desvio = sd(score)
   )
+
+library(dplyr)
+
+arg <- read.csv("arg.csv", sep = ";", encoding = "latin1")
+str(arg)
+
+arg.select <- arg %>%
+  select(TIPO, PERIODO, CO_ANO, NO_FAT_AGREG, NO_PPE_PPI, VL_FOB, KG_LIQUIDO)
+
+head(arg.select, 3)
+
+unique(as.character(arg.select$TIPO))
+
+unique(as.character(arg.select$PERIODO))
+
+arg.filter <- arg.select %>%
+  filter(TIPO == "EXPORTAÇÕES" & PERIODO == "Jan-Abr")
+
+View(arg.filter)
+
+#criar novas variaveis(colunas)
+arg.mutate <- arg.filter %>%
+  mutate(PRECO_VL_KG = VL_FOB/KG_LIQUIDO, LOG_KG = log(KG_LIQUIDO))
+head(arg.mutate)
+
+
+arg.group <- arg.filter %>%
+  group_by(TIPO, PERIODO, CO_ANO, NO_FAT_AGREG) %>%
+  summarise(SOMA_VL_FOB = sum(VL_FOB),
+            MEDIA_KG = mean(KG_LIQUIDO))
+head(arg.group)
+
+arg.arrange <- arg.group %>%
+  arrange(NO_FAT_AGREG, desc(SOMA_VL_FOB))
+head(arg.arrange)
