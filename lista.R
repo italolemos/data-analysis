@@ -297,9 +297,6 @@ break_string <- function(ST) {
 
 break_string(ST)
 #5
-ST=c('NAME:Maria /COUNTRY:uruguay
-/EMAIL:mariaUY@gmail.com','NAME:Paul/COUNTRY:UK
-     /EMAIL:PaulUK@gmail.com',
-     'NAME:Jhon /COUNTRY:USA /EMAIL:JhonUSA@gmail.com','NAME:Carlos
-     /COUNTRY:Spain /EMAIL:CarlosSP@gmail.com')
 
+df <- read.csv("2018/set.csv", header = T, sep = ",", encoding = "latin")
+View(df)
