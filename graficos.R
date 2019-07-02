@@ -41,3 +41,19 @@ temp <- c(31, 23, 28,30,15, 16,24,27, 18,10, 17, 13, 25, 22, 34, 12, 29, 35, 26,
 par(mfrow=c(1,2))
 plot(sapos, umidade, main = "Sapos vs Umidade", xlab = "Sapos", ylab = "Umidade")
 plot(sapos, temp, main = "Sapos vs Temperatura", xlab = "Sapos", ylab = "Temperatura")
+
+#Graficos de barra
+max.temp <- c(30, 35, 40, 38, 25, 24, 23)
+barplot(max.temp,
+        main = "Máxima temperatura em uma semana",
+        ylab = "Graus em Celsius",
+        xlab = "Dia",
+        names.arg = c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"), col = rainbow(7),
+        horiz = T)
+# barras empilhadas    
+colors= c("green","orange","brown")
+months<-c("Mar","Apr","May","Jun", "Jul")
+regions<-c("East","West","North")
+Values<-matrix(c(2,9,3,11,9,4,8,7,3,12,5,2, 8,10,11), nrow= 3, ncol= 5, byrow= TRUE)
+
+barplot(Values, main = "Rendimento total", names.arg = months, xlab = "Meses", ylab = "Rendimento", col = colors)
