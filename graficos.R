@@ -45,7 +45,7 @@ plot(sapos, temp, main = "Sapos vs Temperatura", xlab = "Sapos", ylab = "Tempera
 #Graficos de barra
 max.temp <- c(30, 35, 40, 38, 25, 24, 23)
 barplot(max.temp,
-        main = "Máxima temperatura em uma semana",
+        main = "M??xima temperatura em uma semana",
         ylab = "Graus em Celsius",
         xlab = "Dia",
         names.arg = c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"), col = rainbow(7),
@@ -56,4 +56,61 @@ months<-c("Mar","Apr","May","Jun", "Jul")
 regions<-c("East","West","North")
 Values<-matrix(c(2,9,3,11,9,4,8,7,3,12,5,2, 8,10,11), nrow= 3, ncol= 5, byrow= TRUE)
 
-barplot(Values, main = "Rendimento total", names.arg = months, xlab = "Meses", ylab = "Rendimento", col = colors)
+barplot(Values, main = "Rendimento total", names.arg = months, xlab = "Meses", ylab = "Rendimento", col = colors, beside = T)
+
+# Exerc??cio
+peso <- c(42, 52, 59, 64, 76)
+dias <- c(2, 4, 6, 8, 10)
+barplot(peso,
+        main = "Peso m??dio de pintinhos",
+        xlab = "Dias",
+        ylab = "Peso(g)",
+        names.arg = dias,
+        col = c("orange", "yellow", "green", "red"),
+        horiz = T
+        )
+qualidade <- matrix(c(53.8, 33.9, 2.6, 0.0, 43.6, 54.2, 60.5, 21.4, 2.6, 11.9, 36.8, 78.6), nrow = 3, ncol = 4, byrow = T)
+price <- c("$10-19", "$20-29", "$30-39", "$40-49")
+quality <- c("Good", "Very Good", "Excellent")
+barplot(qualidade, main = "Qualidade das refei????es de acordo com o Pre??o",
+        names.arg = price,
+        xlab = "Valor($)",
+        ylab = "Rating(%)",
+        col = rainbow(3))
+legend("bottomleft", pch = c(15, 15, 15), col = rainbow(3), legend =quality)
+
+#Histrograma
+#Frequencia de dados
+Temperature <- airquality$Temp
+hist(Temperature, col = "grey", density = 20, freq = F)
+densityTemp <- density(Temperature)
+lines(densityTemp)
+#Exercicio
+tempm <- c(67,72,74,62,56,66,65,59,61,69,74,69,66,68,58,64,66,57,68,62,59,73,61,61,57,58, 57, 67,81,79,76)
+temps <- c(91,92,93,93,87,84,80,78,75,73,81,76,77,71,71,78,67,76,68,82,64,71,81,69,63,70,77,75,76,68)
+hist(tempm, main = "Temperatura m??s maio", density = 30)
+hist(temps, main = "Temperatura m??s junho", density = 30, col = "blue")
+help("hist")
+(tempm - 32)/1.8
+
+#Grafico Pizza
+#Representa Diferentes proporcoes entre diferentes classes
+x <- c(32, 12, 30, 53)
+labels <- c("Recife", "Durham",
+             "Toronto", "Amsterdam")
+pie(x, labels, main = "Gr??fico das Cidades", col = rainbow(4))
+pct <- round(x/sum(x)*100)
+lbls <- paste(labels, pct)
+lbls <- paste(lbls, "%", sep="")
+pie(x, labels = lbls, main = "Gr??fico das Cidades", col = rainbow(4))
+legend("topright", legend = c("Recife", "Durham", "Toronto", "Amsterdam"), cex = 0.8, 
+       fill = rainbow(length(x)))
+
+
+#Diagramas de caixa
+boxplot(mpg ~ cyl, 
+        data=mtcars, 
+        xlab = "Numero de cilindros", 
+        ylab = "Milhas por galao", 
+        main = "Dados de milhagem",
+        outline=F)
