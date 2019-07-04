@@ -114,3 +114,11 @@ boxplot(mpg ~ cyl,
         ylab = "Milhas por galao", 
         main = "Dados de milhagem",
         outline=F)
+#Exercicio
+str(InsectSprays)
+boxplot(count ~ spray, data = InsectSprays,
+        xlab = "Tipos de Spray",
+        ylab = "Quantidade de Insetos",
+        main = "Dados de Inseticidas",
+        col = "yellow",
+        outline = F)
