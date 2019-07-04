@@ -105,6 +105,37 @@ lbls <- paste(lbls, "%", sep="")
 pie(x, labels = lbls, main = "Gr??fico das Cidades", col = rainbow(4))
 legend("topright", legend = c("Recife", "Durham", "Toronto", "Amsterdam"), cex = 0.8, 
        fill = rainbow(length(x)))
+#Exercicios
+ocorrência <- c(250, 110, 85, 45, 25)
+defeito <- c("Linha ruidosa", "Linha aberta", 
+             "Alarme", "não responde", "não toca")
+
+pct <- round(ocorrência/sum(ocorrência)*100)
+lbls <- paste(pct, "%", sep = "")
+pie(ocorrência, labels = lbls, main = "Utilização do sistema", col = rainbow(5))
+legend("topright", legend = defeito, cex = 0.8, fill = rainbow(length(ocorrência)))
+
+sales<-read.table("https://training-course-material.com/images/8/8f/Sales.txt",header=TRUE)
+View(sales)
+countries <- sales[,1]
+total <- sales[,2]
+pct <- round(total/sum(total) * 100)
+pct <- paste(pct, "%", sep = "")
+pie(total, labels = pct, main = "Vendas por País",
+    col = rainbow(6))
+legend("topright", legend = countries, cex = 0.8, fill = rainbow(length(total)))
+
+install.packages("HistData")
+library(HistData)
+View(Nightingale)
+
+deads <- c(sum(Nightingale$Army), sum(Nightingale$Disease), sum(Nightingale$Wounds))
+pct <- round(deads/sum(deads)*100)
+pct <- paste(pct, "%", sep = "")
+pie(deads, labels = pct, main = "Causas de morte na guerra", col = rainbow(3))
+legend("topleft", legend = c("Army", "Disease", "Wounds"), cex = 0.8, 
+       fill = rainbow(length(deads)))
+
 
 
 #Diagramas de caixa
