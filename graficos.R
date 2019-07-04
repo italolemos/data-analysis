@@ -153,3 +153,14 @@ boxplot(count ~ spray, data = InsectSprays,
         main = "Dados de Inseticidas",
         col = "yellow",
         outline = F)
+#Estatistica
+#Amostragem
+sample(x = c("cara", "coroa"), prob = c(.1, .9), size = 100, replace = TRUE)
+sample(x = c("a", "b"),
+       prob = c(.9, .1),
+       size = 10,
+       replace = T)
+install.packages("splitstackshape")
+library(splitstackshape)
+stratified(iris, group="Species", size=5, replace=T)
+stratified(infert, group="education", size=c(.1,0.4,0.4), replace=T)
