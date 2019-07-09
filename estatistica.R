@@ -42,3 +42,9 @@ cor.test(marketing$sales, marketing$youtube)
 #determinar a os coeficientes betas
 model <- lm(sales ~ youtube, data = marketing)
 model
+summary(model)
+
+shapiro.test(residuals(model))
+plot(model, 1)
+previsao <- data.frame(youtube=c(100, 1000, 5000))
+predict(model, previsao)
