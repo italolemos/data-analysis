@@ -1,0 +1,77 @@
+---
+title: "RelatorioFinal"
+author: "Ítalo Lemos"
+date: "09/07/2019"
+output:
+  html_document:
+    df_print: paged
+---
+
+# Pacotes Requeridos 
+
+Para este projeto foram utilizado os seguintes pacotes padrões para organização e manipulação de dados e também na visualização.
+
+```{r pck_required, message=FALSE}
+library(tidyr)    # Organização de dados
+library(dplyr)    # Manipulação de dados
+library(ggplot2)  # Geração de gráficos
+library(DT)       # Criar tabelas funcionais em HTML
+```
+
+# Preparação dos dados
+
+Para este projeto, utilizei a base dados de acidentes em rodovias federais brasileiras no ano de 2018. Essa base de dados é mantida pela Polícia Rodoviária Federal (PRF) e é disponibilizada em seu site através de seu portal de [dados abertos](www.prf.gov.br/portal/dados-abertos). Nesse portal também é possível encontrar dados referentes as infrações de trânsito.
+
+A base de dados possui 30 variáveis de difentes tipos seja numérica ou textuais e cerca de mais de 69 mil registros. A extração é iniciada importando o base para o rStudio. Alguns parâmetros são definidos para uma melhor visualização. A seguir uma pequena amostra da base de dados e resumo do seu conteúdo
+
+
+```{r load_dataset, message=FALSE}
+df <- read.csv("datatran2018.csv", sep = ";", dec = ",", encoding = "latin1", na.strings = "")
+
+
+datatable(head(df), caption = "teste")
+```
+
+Após realizar uma avaliação, as variáveis selecionadas para este trabalho foram:
+
+* data_inverva
+  + Data da ocorrência
+* dia_semana
+  + Dia da semana da ocorrência
+* horario
+  + Horário da ocorrência
+* uf
+  + Unidade da Federação ex.: MG, PE, DF
+* km
+  + Identificação do quilômetro onde ocorreu o acidente
+* municipio
+  + Nome do município de ocorrência do acidente
+* causa_acidente
+  + Identificação da causa principal do acidente
+* tipo_acidente
+  + Identificação do tipo de acidente
+* classificação_acidente
+  + Classificação quanto à gravidade do acidente: Sem Vítimas, Com Vítimas Feridas, Com Vítimas Fatais e Ignorado
+
+
+
+
+
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

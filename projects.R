@@ -1,7 +1,10 @@
-df <- read.csv("datatran2018.csv", sep = ";", dec = ",", encoding = "pt_PT.ISO8859-1", na.strings = "")
+df <- read.csv("datatran2018.csv", sep = ";", dec = ",", encoding = "latin1", 
+               na.strings = "", stringsAsFactors = F)
 View(df)
-
+str(df)
 library(dplyr)
+library(ggplot2)
+library(DT)
 
 # dados de PE
 dfPernambuco <- df %>%
@@ -22,7 +25,7 @@ acidentes_por_estrada <- dfPernambuco %>%
   count(br, sort = T)
 View(acidentes_por_estrada)
 
-library(ggplot2)
+
 p <-ggplot(data = acidentes_por_estrada, aes(x = as.character(br), y = n)) + 
   labs(title="Quantidade de Acidentes em Rodovias Pernambucanas", y="Acidentes", x="Rodovia BR-xxx") +
   geom_bar(stat="identity", fill="steelblue") + 
@@ -56,6 +59,7 @@ View(causas)
 
 
 View(dfPernambuco)
+
 # acidentes no são joão em br 232
 acidentes_recife_caruaru_junho <- dfPernambuco %>%
   filter(br == 232,
@@ -84,3 +88,40 @@ barplot(acidentes_com_mortos_por_estrada$mortos,
         cex.names = 0.55,
         )
 View(acidentes_com_mortos_por_estrada)
+
+# Nuvem de Palavras
+install.packages("tm")
+install.packages("wordcloud")
+install.packages("RColorBrewer")
+
+library(tm)
+library(wordcloud)
+library(RColorBrewer)
+
+motivos <- paste(dfPernambuco$causa_acidente, copllapse = " ")
+corpus <- Corpus(VectorSource(motivos))
+inspect(corpus)
+#limpeza de dados
+#Coloca tudo em minúsculo
+corpus <-tm_map(corpus, tolower)
+#Remove pontuação
+corpus <-tm_map(corpus, removePunctuation)
+#Remove números
+corpus <-tm_map(corpus, removeNumbers)
+#Remove espaços extras em branco
+corpus <-tm_map(corpus, stripWhitespace)
+#Remove palavras ruído 
+corpus <-tm_map(corpus, removeWords, stopwords('portuguese'))
+
+tdm<-as.matrix(TermDocumentMatrix(corpus))
+
+#Fornece as frequências ordenadas de cada palavra.
+fre<-sort(rowSums(tdm),decreasing=TRUE)
+
+#Escolhendo um subconjunto dos dados.
+aux<-subset(fre, fre>2)
+
+#Gerar o gráfico.
+barplot(aux, las=2, col= rainbow(10))
+
+# 
