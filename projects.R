@@ -1,5 +1,5 @@
 df <- read.csv("datatran2018.csv", sep = ";", dec = ",", encoding = "latin1", 
-               na.strings = "", stringsAsFactors = F)
+               na.strings = "")
 View(df)
 str(df)
 library(dplyr)
@@ -124,4 +124,40 @@ aux<-subset(fre, fre>2)
 #Gerar o gráfico.
 barplot(aux, las=2, col= rainbow(10))
 
-# 
+# correlacao 
+cor(dfPernambuco$mortos, dfPernambuco$condicao_metereologica)
+
+# condicao meteorologica
+library(tidyr)
+
+condicao_tempo <- dfPernambuco %>%
+  na.omit() %>%
+  select(br, condicao_metereologica) %>%
+  gather(br, condicao_metereologica) %>%
+  group_by(br, condicao_metereologica) %>%
+  summarise(
+    n = n()
+  )
+ 
+
+# fase do dia
+acidentes_fase_dia <- dfPernambuco %>%
+  na.omit() %>%
+  select(br, fase_dia) %>%
+  gather(br, fase_dia) %>%
+  group_by(br, fase_dia) %>%
+  summarise(
+    acidentes = n()
+  )
+theme_set(theme_classic())
+classes <- levels(fase_dia$fase_dia)
+g <- ggplot(acidentes_fase_dia, aes(x=br, y=acidentes))
+g + geom_bar(aes(fill=fase_dia), width = 0.5, stat="identity") + 
+  theme(axis.text.x = element_text(angle=65, vjust=0.6)) +
+  labs(title="Relação de acidentes com a fase do dia ")
+
+
+View(condicao_tempo)
+View(acidentes_fase_dia)
+View(mpg)
+install.packages("DT")

@@ -5,6 +5,7 @@ date: "09/07/2019"
 output:
   html_document:
     df_print: paged
+  pdf_document: default
 ---
 
 # Pacotes Requeridos 
@@ -32,31 +33,65 @@ df <- read.csv("datatran2018.csv", sep = ";", dec = ",", encoding = "latin1", na
 datatable(head(df), caption = "teste")
 ```
 
-Após realizar uma avaliação, as variáveis selecionadas para este trabalho foram:
+Após realizar uma avaliação de quais variáveis seriam úteis para uma melhor análise exploratória, foram selecionadas para este trabalho:
 
 * data_inverva
-  + Data da ocorrência
+ + Data da ocorrência
 * dia_semana
-  + Dia da semana da ocorrência
+ + Dia da semana da ocorrência
 * horario
-  + Horário da ocorrência
+ + Horário da ocorrência
 * uf
-  + Unidade da Federação ex.: MG, PE, DF
+ + Unidade da Federação ex.: MG, PE, DF
 * km
-  + Identificação do quilômetro onde ocorreu o acidente
+ + Identificação do quilômetro onde ocorreu o acidente
 * municipio
-  + Nome do município de ocorrência do acidente
+ + Nome do município de ocorrência do acidente
 * causa_acidente
-  + Identificação da causa principal do acidente
+ + Identificação da causa principal do acidente
 * tipo_acidente
-  + Identificação do tipo de acidente
+ + Identificação do tipo de acidente
 * classificação_acidente
-  + Classificação quanto à gravidade do acidente: Sem Vítimas, Com Vítimas Feridas, Com Vítimas Fatais e Ignorado
+ + Classificação quanto à gravidade do acidente: Sem Vítimas, Com Vítimas Feridas, Com Vítimas Fatais e Ignorado
+* condição_meteorologica
+ + Condição meteorológica no momento do acidente: Céu claro, chuva, vento, etc
+* latitude
+ + Latitude do local do acidente em formato geodésico decimal.
+* longitude
+ + Longitude do local do acidente em formato geodésico decimal.
+* pessoas
+ + Total de pessoas envolvidas na ocorrência
+* mortos
+ + Total de pessoas mortas envolvidas na ocorrência
+* feridos
+ + Total de pessoas feridas envolvidas na ocorrência
 
+A primeira etapa é filtar apenas as ocorrências registradas no estado de Pernambuco, para uma análise mais completa. Além de filtrar pelo estado cidade, selecio apenas as variáveis que seram utilizadas. 
 
+```{r}
+# dados de PE
+dfPernambuco <- df %>%
+  select(data_inversa, dia_semana, horario, uf, br, km, municipio, causa_acidente, tipo_acidente, classificacao_acidente,
+         fase_dia, condicao_metereologica, feridos, mortos,  veiculos, latitude, longitude) %>%
+  filter(uf == "PE")
 
+```
 
+Em seguida, analisamos a nova base gerada para identificar características relevantes sobre as varíaveis. Ob
 
+```{r, message=FALSE}
+str(dfPernambuco)
+```
+
+Feito isso, identifico que algumas varíaveis necessitam passar por uma transformação de tipo de dados. A variável Data, e km são fatores. Converto elas para o tipo date e numérico, respectivamente, através da seguinte operação
+
+```{r}
+dfPernambuco$data_inversa <- as.Date(dfPernambuco$data_inversa, format ="%Y-%m-%d")
+dfPernambuco$km <- sub(",", ".", dfPernambuco$km)
+dfPernambuco$km <- as.numeric(dfPernambuco$km)
+```
+
+Assim obtemos os dados necessários para nossa análise
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
