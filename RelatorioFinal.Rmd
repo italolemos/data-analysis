@@ -1,20 +1,22 @@
 ---
-title: "RelatorioFinal"
+title: "Acidentes nas rodovias  federais de Pernambuco em 2018"
 author: "Ítalo Lemos"
 date: "06/07/2019"
 output:
   html_document:
     df_print: paged
-  pdf_document: default
 ---
+```{r setup, include=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 # Introdução
 
-Os acidentes de trânsito são reconhecidos pela Organização Mundial de Saúde (OMS)  como  um grave  problema  de  saúde  pública  e  uma  das  principais  causas  de  mortes e lesões em todo o mundo. Além do elevado custo para os serviços de saúde e para as economias dos países, podendo atingir de 1% a 3% do Produto Interno Bruto (PIB)  (ONU,  2011),  os  acidentes  de  trânsito  desencadeiam  diversos  traumas  para  a  sociedade e as relações sociais, além de acarretar a perda precoce de vidas.É necessário compreender que o trânsito é primordial para o desenvolvimento nacional.  Facilita  a  circulação  de  pessoas  e  bens,  melhora  o  acesso  à  educação,  aos  serviços  de  saúde,  ao  emprego  e  ao  desenvolvimento.  A  Segurança  Viária  envolve  a  responsabilidade  quanto  à  mobilidade  das  pessoas  e  veículos  na  via,  bem  como  a  complexa dinâmica de compartilhamento de espaço, até o estabelecimento de normas de circulação com o objetivo de proteger os usuários e evitar reflexos negativos em todo o aparato estatal.
+Os acidentes de trânsito são reconhecidos pela Organização Mundial de Saúde (OMS)  como  um grave  problema  de  saúde  pública  e  uma  das  principais  causas  de  mortes e lesões em todo o mundo. Além do elevado custo para os serviços de saúde e para as economias dos países, podendo atingir de 1% a 3% do Produto Interno Bruto (PIB)  (ONU,  2011),  os  acidentes  de  trânsito  desencadeiam  diversos  traumas  para  a  sociedade e as relações sociais, além de acarretar a perda precoce de vidas. É necessário compreender que o trânsito é primordial para o desenvolvimento nacional.  Facilita  a  circulação  de  pessoas  e  bens,  melhora  o  acesso  à  educação,  aos  serviços  de  saúde,  ao  emprego  e  ao  desenvolvimento.  A  Segurança  Viária  envolve  a  responsabilidade  quanto  à  mobilidade  das  pessoas  e  veículos  na  via,  bem  como  a  complexa dinâmica de compartilhamento de espaço, até o estabelecimento de normas de circulação com o objetivo de proteger os usuários e evitar reflexos negativos em todo o aparato estatal.
 
 O Plano Nacional de Redução de Mortes e Lesões no Trânsito (PNATRANS), acrescentando o artigo 326-A ao Código de Trânsito Brasileiro (CTB), e propôs um novo desafio para a gestão de trânsito no Brasil e para os órgãos integrantes do Sistema Nacional de Trânsito (SNT). O Plano, elaborado em conjunto pelos órgãos de saúde, de trânsito, de transporte e de justiça, traz as diretrizes para que  o  país  reduza  em,  no  mínimo,  metade  o  índice  nacional  de  mortos  por  grupo  de  veículos e o índice nacional de mortos por grupo de habitantes. Para tanto, estabelece um prazo de dez anos. As metas de redução de mortes e lesões no trânsito, fixadas pelo  Conselho  Nacional  de  Trânsito  (CONTRAN),  para  cada  um  dos  Estados  da  Federação e para o Distrito Federal, a partir das propostas dos Conselhos Estaduais de Trânsito (CETRAN), do Conselho de Trânsito do Distrito Federal (CONTRANDIFE) e do Departamento de Polícia Rodoviária Federal (DPRF), no âmbito das respectivas circunscrições,   garante   que   todos   sejam   chamados   a   contribuir.  
 
-A Polícia Rodoviária Federal publica sistematicamente os principais dados constando do Boletim de Ocorrência de cada acidente registrado como ocorrido nas rodovias federais: número das vitimas e gravidade, tipo de acidente, causa principal, configuração do local, condições climáticas, fase do dia, etc.
+  A Polícia Rodoviária Federal publica sistematicamente os principais dados constando do Boletim de Ocorrência de cada acidente registrado como ocorrido nas rodovias federais: número das vitimas e gravidade, tipo de acidente, causa principal, configuração do local, condições climáticas, fase do dia, etc.
 
 O processamento destes dados permite estabelecer estatísticas de acidentes e de vítimas em cada estado e cada rodovia e em qualquer trecho de rodovia que se queira estudar com mais detalhe. Assim, permite identificar os locais de maior concentração de acidentes e analizar todos os acidentes ocorridos em cada local.
 
@@ -24,7 +26,7 @@ Este Trabalho visa analisar apenas ocorrências no estado de Pernambuco
 
 Para este projeto foram utilizado os seguintes pacotes padrões para organização e manipulação de dados e também na visualização.
 
-```{r pck_required, message=FALSE}
+```{r pck_required, results='hide', message=FALSE, warning=FALSE}
 library(tidyr)        # Organização de dados
 library(dplyr)        # Manipulação de dados
 library(ggplot2)      # Geração de gráficos
@@ -45,7 +47,7 @@ Para este projeto, utilizei a base dados de acidentes em rodovias federais brasi
 A base de dados possui 30 variáveis de difentes tipos seja numérica ou textuais e cerca de mais de 69 mil registros. A extração é iniciada importando o base para o rStudio. Alguns parâmetros são definidos para uma melhor visualização. A seguir uma pequena amostra da base de dados e resumo do seu conteúdo
 
 
-```{r load_dataset, message=FALSE}
+```{r load_dataset, results='hide', message=FALSE, warning=FALSE}
 df <- read.csv("datatran2018.csv", sep = ";", dec = ",", encoding = "latin1", na.strings = "")
 
 
@@ -54,36 +56,36 @@ datatable(head(df))
 
 Após realizar uma avaliação de quais variáveis seriam úteis para uma melhor análise exploratória, foram selecionadas para este trabalho:
 
-* data_inverva
-  + Data da ocorrência
-* dia_semana
-  + Dia da semana da ocorrência
-* horario
-  + Horário da ocorrência
-* uf
-  + Unidade da Federação ex.: MG, PE, DF
-* km
-  + Identificação do quilômetro onde ocorreu o acidente
-* municipio
-  + Nome do município de ocorrência do acidente
-* causa_acidente
-  + Identificação da causa principal do acidente
-* tipo_acidente
-  + Identificação do tipo de acidente
-* classificação_acidente
-  + Classificação quanto à gravidade do acidente: Sem Vítimas, Com Vítimas Feridas, Com Vítimas Fatais e Ignorado
-* condição_meteorologica
-  + Condição meteorológica no momento do acidente: Céu claro, chuva, vento, etc
-* latitude
-  + Latitude do local do acidente em formato geodésico decimal.
-* longitude
-  + Longitude do local do acidente em formato geodésico decimal.
-* pessoas
-  + Total de pessoas envolvidas na ocorrência
-* mortos
-  + Total de pessoas mortas envolvidas na ocorrência
-* feridos
-  + Total de pessoas feridas envolvidas na ocorrência
+ * data_inverva
+    + Data da ocorrência
+ * dia_semana
+     + Dia da semana da ocorrência
+ * horario
+    + Horário da ocorrência
+ * uf
+    + Unidade da Federação ex.: MG, PE, DF
+ * km
+    + Identificação do quilômetro onde ocorreu o acidente
+ * municipio
+    + Nome do município de ocorrência do acidente
+ * causa_acidente
+    + Identificação da causa principal do acidente
+ * tipo_acidente
+    + Identificação do tipo de acidente
+ * classificação_acidente
+    + Classificação quanto à gravidade do acidente: Sem Vítimas, Com Vítimas Feridas, Com Vítimas Fatais e Ignorado
+ * condição_meteorologica
+    + Condição meteorológica no momento do acidente: Céu claro, chuva, vento, etc
+ * latitude
+    + Latitude do local do acidente em formato geodésico decimal.
+ * longitude
+    + Longitude do local do acidente em formato geodésico decimal.
+ * pessoas
+    + Total de pessoas envolvidas na ocorrência
+ * mortos
+    + Total de pessoas mortas envolvidas na ocorrência
+ * feridos
+    + Total de pessoas feridas envolvidas na ocorrência
 
 A primeira etapa é filtar apenas as ocorrências registradas no estado de Pernambuco, para uma análise mais completa. Além de filtrar pelo estado cidade, selecio apenas as variáveis que seram utilizadas. 
 
@@ -96,13 +98,13 @@ dfPernambuco <- df %>%
 
 ```
 
-Em seguida, analisamos a nova base gerada para identificar características relevantes sobre as varíaveis. Ob
+Em seguida, analisamos a nova base gerada para identificar características relevantes sobre as varíaveis.
 
 ```{r, message=FALSE}
 str(dfPernambuco)
 ```
 
-Feito isso, identifico que algumas varíaveis necessitam passar por uma transformação de tipo de dados. A variável Data, e km são fatores. Converto elas para o tipo date e numérico, respectivamente, através da seguinte operação
+Feito isso, identifico que algumas varíaveis necessitam passar por uma conversão de tipo de dados. A variável Data, e km são fatores. Converto elas para o tipo date e numérico, respectivamente, através da seguinte operação. Pois elas seram utilizadas em algumas análises. E algumas funções necessitam que esses dados estejam em seu formato real.
 
 ```{r, results='hide', message=FALSE, warning=FALSE}
 dfPernambuco$data_inversa <- as.Date(dfPernambuco$data_inversa, format ="%Y-%m-%d")
@@ -110,7 +112,7 @@ dfPernambuco$km <- sub(",", ".", dfPernambuco$km)
 dfPernambuco$km <- as.numeric(dfPernambuco$km)
 ```
 
-Assim obtemos os dados necessários para nossa análise.
+Assim obtemos os dados necessários para nossa análise. A base contendo os registros de Pernambuco contém `r nrow(dfPernambuco)` observações. 
 
 # Análise Exploratória dos dados
 
@@ -141,7 +143,7 @@ A BR-101 corta 12 estados brasileiros na direção de norte a sul através do li
 
 
 
-A próxima análise refere em descobrir em quais meses do ano a uma maior incidência de acidentes. Ela é obtida através do seguinte script
+A próxima análise refere em descobrir em quais meses do ano a uma maior incidência de acidentes. Nesta análise foi necessário a criação da variável month, ela é necessária para agrupar a relação por meses. Obtendo a relação meses x quantidade de acidantes. Ela é obtida através do seguinte script
 
 ```{r}
 mes_acidente <- dfPernambuco %>%
@@ -153,13 +155,13 @@ mes_acidente <- dfPernambuco %>%
   )
 ```
 
-Em seguida, convertemos a variável month para o formato do tipo data.
+Em seguida, convertemos a variável month para o formato do tipo data. Cada mês será convetido para o primeiro dia do mês no formato Year-month-day.
 
 ```{r}
 mes_acidente$month <- as.Date(as.yearmon(mes_acidente$month))
 ```
 
-Assim podemos gerar o seguinte gráfico
+Assim podemos gerar o seguinte gráfico baseado nos meses.
 
 ```{r, echo=TRUE}
 ggplot(data = mes_acidente, aes(x = month, y = acidentes, group = 1)) + 
@@ -183,7 +185,7 @@ acidentes_pelo_tipo <- dfPernambuco %>%
   adorn_totals("row")
 ```
 
-Essa tabela pode ser melhor visualizada através do uso de bibliotecas, ficando desse jeito
+Essa tabela pode ser melhor visualizada através do uso de bibliotecas externas, por essa maneira
 
 ```{r}
 kable(acidentes_pelo_tipo) %>%
@@ -221,17 +223,17 @@ tdm<-as.matrix(TermDocumentMatrix(corpus))
 fre<-sort(rowSums(tdm),decreasing=TRUE)
 ```
 
-Ao final podemos plotar um gráfico do tipo de barras contendo as palavras mais frequentes
+Ao final, podemos plotar um gráfico do tipo de barras contendo as palavras mais frequentes
 
 ```{r}
 #Escolhendo um subconjunto dos dados.
 aux<-subset(fre, fre>2)
 
 #Gerar o gráfico.
-barplot(aux, las=2, col= rainbow(10), cex.names= 0.6)
+barplot(aux, las=2, col= rainbow(10), cex.names= 0.6, main = "Frequência de palavras nas causas de acidentes")
 ```
 
-A frequência de palavras mais usadas estão entre elas "atenção", "falta", "condução", "condutor", "desobidiência", "normas". Podemos levantar a hipótese de que os acidentes ou a grande maioria deles são falhas humanas. Já que as palavras mais frequentes referem-se a requerer atenção dos motoristas 
+A frequência de palavras mais usadas estão entre elas "atenção", "falta", "condução", "condutor", "desobidiência", "normas". Podemos levantar a hipótese de que os acidentes ou a grande maioria deles são sempre falhas humanas. Já que as palavras mais frequentes referem-se a atenção dos motoristas. Os termos que indicam problemas estruturais na rodovias, como sinalização ou infraestura aparecem em menor frequência
 
 Uma próxima relação que podemos obter é a relação de acidentes com fator metereológico. Podemos equiparar em quais condições climáticas ocorrem a maioria dos acidentes nas rodovias. Neste tipo de análise selecionaremos a variável fase do dia, gerando o seguinte código.
 
@@ -276,11 +278,18 @@ acidentes_recife_caruaru_junho <- dfPernambuco %>%
 O que possibilita gerar esse gráfico, dividindo as ocorrências por dias da semana durante todo o mês
 
 ```{r}
-ggplot(acidentes_recife_caruaru_junho, aes(x=factor(dia_semana), group = 1)) + 
-  geom_line(aes(y=acidentes), stat = "identity") +
-  geom_line(aes(y=mortes, col = "red"), stat = "identity")
+ggplot(acidentes_recife_caruaru_junho, aes(dia_semana, group = 1)) + 
+  geom_line(aes(y=acidentes, lty = 'Acidentes'), stat = "identity", col = "blue") +
+  geom_line(aes(y=mortes, lty = "Mortos"), stat = "identity", col = "red") + 
+  labs(subtitle = "Acidentes entre Recife e Caruaru no são joão") +
+  scale_linetype('Legenda')
 ```
 
 # Conclusões
 
+Foi observado que Pernambuco possui características peculiares em suas rodovias, que podem ser diferentes das de outros estados. O fato é que mesmo o PNATRAS iniciando em 2018, o estado contou com muitos acidentes em suas estradas. Através desta análise foi possível observar padrões de determinadas rodovias assim como entender o comportamento da grande maioria dos motoristas que trafegam pela região. Entender como é o comportamento do motorista pode contribuir para  bastante para criar metas na a redução de acidentes e consequentemente o número de vítimas.
 
+
+Iniciativas de melhoria do trânsito como ampliação de meios de fiscalização eletrônica e foco na educação no trânsito são necessidades requeridas após este estudo. Uma questão obeservada no trabalho é que grande parte dos acidentes ocorrem por falha humana. É preciso formentar  projetos que estimulem a vivência no trânsito como medida de prevenção.
+
+Visto que a Polícia Rodoviária Federal disponibiliza em seu portal de dados abertos, dados referentes a infrações de trânsitos cometidas. Há a possibilidade buscar uma relação de infrações com ocorrência de acientes, tentando obter alguma co-relação entre os dois temas.

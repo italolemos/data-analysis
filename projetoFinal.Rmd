@@ -2,7 +2,9 @@
 title: "relatorioFinal"
 author: "??talo Lemos"
 date: "7/6/2019"
-output: pdf_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
